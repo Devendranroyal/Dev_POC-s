@@ -1,0 +1,123 @@
+import tkinter as tk                # python 3
+from tkinter import font  as tkfont # python 3
+#import Tkinter as tk     # python 2
+#import tkFont as tkfont  # python 2
+from tkinter import *
+import sqlite3
+import os
+import numpy as np
+import cv2
+import tkinter as tk
+from tkinter import Frame, Button, Label
+from PIL import Image,ImageTk # For face recognition we will the the LBPH Face Recognizer
+import PIL
+from PIL import Image,ImageTk
+
+
+class SampleApp(tk.Tk):
+
+    def __init__(self, *args, **kwargs):
+        tk.Tk.__init__(self, *args, **kwargs)
+
+        self.title_font = tkfont.Font(family='Helvetica', size=18, weight="bold", slant="roman")
+        self.title("INFOGAIN")
+        self.config(background="silver")
+        self.geometry('1600x1200')
+        #label_0 = Label(self, text="Infogain Attendence System", bg="black", fg="white", width=310, font=("bold", 12))
+        #label_0.place(x=100, y=0)
+
+        # the container is where we'll stack a bunch of frames
+        # on top of each other, then the one we want visible
+        # will be raised above the others
+        container = tk.Frame(self)
+        container.pack(side="top", fill="both", expand=True)
+        container.grid_rowconfigure(0, weight=1)
+        container.grid_columnconfigure(0, weight=1)
+
+        self.frames = {}
+        for F in (StartPage, PageOne, PageTwo):
+            page_name = F.__name__
+            frame = F(parent=container, controller=self)
+            self.frames[page_name] = frame
+
+            # put all of the pages in the same location;
+            # the one on the top of the stacking order
+            # will be the one that is visible.
+            frame.grid(row=0, column=0, sticky="nsew")
+
+        self.show_frame("StartPage")
+
+    def show_frame(self, page_name):
+        '''Show a frame for the given page name'''
+        frame = self.frames[page_name]
+        frame.tkraise()
+
+
+class StartPage(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="INFOGAIN EMOTION DETECTION & FACE RECOGNITION SYSTEM", font=controller.title_font,fg="dark blue",bg="white")
+        label.pack(side="top", fill="x", pady=10)
+        image = ImageTk.PhotoImage(Image.open("C:\\Users\\Devendran.D\\Desktop\\Azure\\image.jpg"))
+        label1 = Label(self, image=image)
+        label1.image = image
+        label1.place(x=0, y=45)
+        # label.create_image(0,0,anchor=NW,image=image,)
+
+        button1 = tk.Button(self, text="Emotion Detection",
+                            command=lambda: controller.show_frame("PageOne"),height = 5, width = 45,bg="silver")
+        button2 = tk.Button(self, text="Face Recognition",
+                            command=lambda: controller.show_frame("PageTwo"),height = 5, width = 45,bg="silver")
+
+        button1.place(x=600, y=150)
+        button2.place(x=600, y=350)
+        #button1.pack()
+        #button2.pack()
+
+
+class PageOne(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="EMOTION DETECTION", font=controller.title_font)
+        label.pack(side="top", fill="x", pady=10)
+        button = tk.Button(self, text="EMOTION DETECTION",
+                           command=lambda: controller.show_frame("StartPage"))
+        button = tk.Button(self, text="Go to the start page",
+                           command=lambda: controller.show_frame("StartPage"))
+        button.pack()
+
+
+class PageTwo(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="FACE RECOGNITION", font=controller.title_font)
+        label.pack(side="top", fill="x", pady=10)
+        button = tk.Button(self, text="FACE DETECTION",
+                           command=lambda: controller.show_frame("StartPage"))
+        button = tk.Button(self, text="Go to the start page",
+                           command=lambda: controller.show_frame("StartPage"))
+        button.place(x=750, y=50)
+
+        button = tk.Button(self, text='Register', width=25, bg='white', fg='black',
+               command=controller.show_frame("StartPage")).place(x=50, y=50)
+        # command=lambda:[dataGenerator, self.funcA()]
+        button = tk.Button(self, text="Video Capture", width=25, bg='white', fg='black', command=controller.show_frame("StartPage")).place(x=50, y=125)
+        button = tk.Button(self, text='Train', width=25, bg='white', fg='black', command=controller.show_frame("StartPage")).place(x=50, y=200)
+        button = tk.Button(self, text="Predictor", width=25, bg='white', fg='black', command=controller.show_frame("StartPage")).place(x=50, y=275)
+        button = tk.Button(self, text="clear", width=10, bg='white', fg='black', command=controller.show_frame("StartPage")).place(x=50, y=350)
+        button = tk.Button(self, text="quit", width=10, bg='white', fg='black', command=controller.show_frame("StartPage")).place(x=200, y=350)
+
+        #button.pack()
+
+if __name__ == "__main__":
+        app = SampleApp()
+        app.mainloop()
+
+
+
