@@ -1,0 +1,21 @@
+Name,Percentage
+Date,0
+"Incident 
+Time",3.14
+CBU,0.31
+Failed Workflow Name,0.16
+Failed Workflow Session,19.5
+Reason for Failure,4.4
+Mitigation Steps,15.25
+Resolved Date,16.82
+Resolved Time,22.8
+ITSMIncident#,3.62
+Resolved by - Offhsore,15.72
+Resolved by - On Site,9.75
+Issue Fixed by onsite/offshore,70.91
+Month (Formula for Analysis),57.86
+Failure Type,78.93
+"Call to HAEA Support
+(Y / N)",64.47
+Comments,97.17
+Ticket # (Failure as part of prod migration),99.84
